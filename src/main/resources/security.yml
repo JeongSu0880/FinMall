@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3309/hanarodb
+    username: hanaro
+    password: 12345678
+
+jwt:
+  secret: your-secret-key
+  expiration: 3600000
