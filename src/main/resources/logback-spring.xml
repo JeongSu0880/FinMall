@@ -35,6 +35,10 @@
     <logger name="com.hanaro" level="DEBUG">
         <appender-ref ref="FILE2"/>
     </logger>
+
+    <!--    운영 중에는 넣지 말아라..? -->
+    <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+
     <root level="WARN">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>

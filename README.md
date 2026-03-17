@@ -1,0 +1,1 @@
+DB 에 User 권한 세팅 init.sql 스크립트 사용.

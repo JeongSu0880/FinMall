@@ -17,7 +17,8 @@ services:
       - --collation-server=utf8mb4_unicode_ci
       - --innodb_ft_min_token_size=2
       - --log_bin_trust_function_creators=1
-      - --innodb_ft_server_stopword_table=testdb/StopWord
+      - --innodb_ft_server_stopword_table=hanarodb/StopWord
 
     volumes:
       - ./mysql:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro

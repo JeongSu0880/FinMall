@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3309/hanarodb
+    url: jdbc:mysql://localhost:3308/hanarodb
     username: hanaro
     password: 12345678
 
