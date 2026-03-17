@@ -32,7 +32,7 @@
     <logger name="org.springframework" level="WARN">
         <appender-ref ref="FILE"/>
     </logger>
-    <logger name="com.hana8.demo" level="DEBUG">
+    <logger name="com.hanaro" level="DEBUG">
         <appender-ref ref="FILE2"/>
     </logger>
     <root level="WARN">

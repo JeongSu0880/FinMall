@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 
 mysql
+logs
 
 security.yml
 

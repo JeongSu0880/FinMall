@@ -1,20 +1,23 @@
 services:
   localdb:
-    container_name: finMallDB
+    container_name: finMall
     image: mysql:8.0
     ports:
-      - 3309:3306
+      - "3308:3306"
+    expose:
+      - 3308
     environment:
       MYSQL_ROOT_PASSWORD: root12345678
-      MYSQL_DATABASE: hanadb
+      MYSQL_DATABASE: hanarodb
       MYSQL_USER: hanaro
       MYSQL_PASSWORD: 12345678
+      TZ: Asia/Seoul
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-      - --log_bin_trust_function_creators=1
-      - --default-time-zone=Asia/Seoul
       - --innodb_ft_min_token_size=2
+      - --log_bin_trust_function_creators=1
       - --innodb_ft_server_stopword_table=testdb/StopWord
+
     volumes:
       - ./mysql:/var/lib/mysql
