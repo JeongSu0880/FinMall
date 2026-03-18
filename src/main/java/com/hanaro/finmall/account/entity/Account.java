@@ -1,8 +1,9 @@
-package com.hanaro.finmall.account;
+package com.hanaro.finmall.account.entity;
 
+import com.hanaro.finmall.account.AccountStatus;
 import com.hanaro.finmall.common.BaseEntity;
-import com.hanaro.finmall.product.Product;
-import com.hanaro.finmall.user.User;
+import com.hanaro.finmall.product.entity.Product;
+import com.hanaro.finmall.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

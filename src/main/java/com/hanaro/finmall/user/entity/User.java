@@ -1,6 +1,7 @@
-package com.hanaro.finmall.user;
+package com.hanaro.finmall.user.entity;
 
 import com.hanaro.finmall.common.BaseEntity;
+import com.hanaro.finmall.user.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
