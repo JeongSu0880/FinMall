@@ -11,10 +11,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: false
-    defer-datasource-initialization: false
+    show-sql: true
+    defer-datasource-initialization: true
     properties:
       hibernate:
         jdbc:

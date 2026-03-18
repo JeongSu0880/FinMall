@@ -1,0 +1,81 @@
+DROP TABLE IF EXISTS Transaction;
+TRUNCATE TABLE Account;
+TRUNCATE TABLE Product;
+TRUNCATE TABLE Bank;
+TRUNCATE TABLE User;
+
+CREATE TABLE Bank (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE User (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL,
+    birth_date DATE NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Product (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    bank_id INT UNSIGNED NOT NULL,
+    product_type VARCHAR(20) NOT NULL,
+    interest_type VARCHAR(20) NOT NULL,
+    payment_cycle INT NULL,
+    is_fixed BOOLEAN NOT NULL,
+    total_period_days INT NOT NULL,
+    min_payment_amount INT NOT NULL,
+    max_payment_amount INT NOT NULL,
+    base_rate DECIMAL(5,2) NOT NULL,
+    early_withdrawal_rate DECIMAL(5,2) NOT NULL,
+    min_age INT NULL,
+    max_age INT NULL,
+    deposit_protection_limit INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (bank_id) REFERENCES Bank(id)
+);
+
+CREATE TABLE Account (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    product_id INT UNSIGNED NOT NULL,
+    account_number VARCHAR(30) NOT NULL UNIQUE,
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
+    principal BIGINT NOT NULL DEFAULT 0,
+    balance BIGINT NOT NULL DEFAULT 0,
+    accrued_interest BIGINT NOT NULL DEFAULT 0,
+    applied_rate DECIMAL(5,2) NOT NULL,
+    total_installment_count INT UNSIGNED NOT NULL,
+    current_installment_count INT UNSIGNED NOT NULL DEFAULT 0,
+    payment_day INT UNSIGNED NULL,
+    last_paid_at DATETIME NULL,
+    started_at DATETIME NOT NULL,
+    maturity_at DATETIME NOT NULL,
+    terminated_at DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES User(id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+);
+
+CREATE TABLE Transaction (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    account_id INT UNSIGNED NOT NULL,
+    transaction_type VARCHAR(20) NOT NULL,
+    amount INT NOT NULL,
+    balance_after BIGINT NOT NULL,
+    occurred_at DATETIME NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'COMPLETED',
+    description VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES Account(id)
+);

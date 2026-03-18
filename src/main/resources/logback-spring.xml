@@ -29,15 +29,30 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="org.springframework" level="WARN">
+    <logger name="org.springframework" level="INFO">
         <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="com.hanaro" level="DEBUG">
+        <appender-ref ref="FILE2"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- Hibernate SQL logs -->
+    <logger name="org.hibernate.SQL" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE2"/>
+    </logger>
+    <logger name="org.hibernate.tool.schema" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE2"/>
     </logger>
 
     <!--    운영 중에는 넣지 말아라..? -->
-    <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+    <logger name="org.hibernate.orm.jdbc.bind" level="TRACE">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE2"/>
+    </logger>
 
     <root level="WARN">
         <appender-ref ref="FILE"/>

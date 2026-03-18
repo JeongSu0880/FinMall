@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "User")
 public class User extends BaseEntity {
 
     @Id
@@ -29,7 +30,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private UserRole role;
 
-    @Column(name = "birth_date", nullable = false)
+    @Column(nullable = false)
     private LocalDate birthDate;
 
     @Column(nullable = false)
