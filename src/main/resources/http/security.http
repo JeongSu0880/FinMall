@@ -1,0 +1,24 @@
+### 회원가입
+
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "user123",
+  "password": "password123",
+  "nickname": "testuser"
+}
+
+### 2. login
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user123",
+  "password": "password123"
+}
+
+> {%
+    client.global.set("auth_token", response.body.accessToken);
+%}

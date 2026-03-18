@@ -1,0 +1,45 @@
+### 7. Join Product
+# @name createAccount
+POST {{host}}/api/accounts
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "productId": 1,
+  "accountNumber": "12345678901"
+}
+
+### 8. Account Detail
+# @name getAccountDetail
+GET {{host}}/api/accounts/1
+Authorization: Bearer {{auth_token}}
+
+### 9. Deposit
+# @name deposit
+POST {{host}}/api/accounts/1/deposit
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "amount": 10000
+}
+
+### 10. Withdraw
+# @name withdraw
+POST {{host}}/api/accounts/1/withdraw
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "amount": 5000
+}
+
+### 11. Terminate
+# @name terminate
+POST {{host}}/api/accounts/1/terminate
+Authorization: Bearer {{auth_token}}
+
+### 12. Interest
+# @name getInterest
+GET {{host}}/api/accounts/1/interest
+Authorization: Bearer {{auth_token}}

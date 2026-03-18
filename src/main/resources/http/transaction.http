@@ -1,0 +1,4 @@
+### 내 거래 내역 조회
+
+GET {{host}}/api/accounts/1/transactions?page=0&size=10
+Authorization: Bearer {{auth_token}}

@@ -1,0 +1,7 @@
+### 5. Products
+# @name getProducts
+GET {{host}}/api/products
+
+### 6. Product Detail
+# @name getProductDetail
+GET {{host}}/api/products/1

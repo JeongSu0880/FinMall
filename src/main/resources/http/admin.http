@@ -1,0 +1,55 @@
+### 16. Create Product
+# @name createProduct
+POST {{host}}/api/admin/products
+Content-Type: application/json
+Authorization: Bearer {{admin_token}}
+
+{
+  "name": "New Savings Product",
+  "description": "A high-interest savings product.",
+  "interestRate": 3.5,
+  "period": 12
+}
+
+### 17. Update Product
+# @name updateProduct
+PUT {{host}}/api/admin/products/1
+Content-Type: application/json
+Authorization: Bearer {{admin_token}}
+
+{
+  "name": "Updated Savings Product",
+  "description": "An updated description.",
+  "interestRate": 3.7,
+  "period": 12
+}
+
+### 18. Delete Product
+# @name deleteProduct
+DELETE {{host}}/api/admin/products/1
+Authorization: Bearer {{admin_token}}
+
+### 19. Admin Products
+# @name getAdminProducts
+GET {{host}}/api/admin/products
+Authorization: Bearer {{admin_token}}
+
+### 20. Admin Users
+# @name getAdminUsers
+GET {{host}}/api/admin/users
+Authorization: Bearer {{admin_token}}
+
+### 21. Admin User Detail
+# @name getAdminUserDetail
+GET {{host}}/api/admin/users/1
+Authorization: Bearer {{admin_token}}
+
+### 22. Admin User Accounts
+# @name getAdminUserAccounts
+GET {{host}}/api/admin/users/1/accounts
+Authorization: Bearer {{admin_token}}
+
+### 23. Mature Account
+# @name matureAccount
+POST {{host}}/api/admin/accounts/1/mature
+Authorization: Bearer {{admin_token}}

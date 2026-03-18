@@ -1,0 +1,9 @@
+### 내 정보 조회
+
+GET {{host}}/api/users/me
+Authorization: Bearer {{auth_token}}
+
+### 내 계좌 조회
+
+GET {{host}}/api/users/me/accounts
+Authorization: Bearer {{auth_token}}
