@@ -37,6 +37,7 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private InterestType interestType;
 
+    @Column
     private Integer paymentCycle;
 
     @Column(nullable = false)
@@ -57,8 +58,10 @@ public class Product extends BaseEntity {
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal earlyWithdrawalRate;
 
+    @Column
     private Integer minAge;
 
+    @Column
     private Integer maxAge;
 
     @Column(nullable = false)

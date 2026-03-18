@@ -1,76 +1,87 @@
-create table account (
-                         applied_rate decimal(5,2) not null,
-                         current_installment_count INT UNSIGNED not null,
-                         payment_day INT UNSIGNED,
-                         total_installment_count INT UNSIGNED not null,
-                         accrued_interest bigint not null,
-                         balance bigint not null,
-                         created_at TIMESTAMP null,
-                         id INT UNSIGNED not null auto_increment,
-                         last_paid_at datetime(6),
-                         maturity_at datetime(6) not null,
-                         principal bigint not null,
-                         product_id INT UNSIGNED not null,
-                         started_at datetime(6) not null,
-                         terminated_at datetime(6),
-                         updated_at TIMESTAMP null,
-                         user_id INT UNSIGNED not null,
-                         account_number varchar(30) not null,
-                         status enum ('ACTIVE','MATURED','SUSPENDED','TERMINATED') not null,
-                         primary key (id)
+
+CREATE TABLE Bank (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-create table bank (
-                      created_at TIMESTAMP null,
-                      id INT UNSIGNED not null auto_increment,
-                      updated_at TIMESTAMP null,
-                      name varchar(50) not null,
-                      primary key (id)
+CREATE TABLE User (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL,
+    birthDate DATE NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-create table product (
-                         base_rate decimal(5,2) not null,
-                         deposit_protection_limit integer not null,
-                         early_withdrawal_rate decimal(5,2) not null,
-                         is_fixed bit not null,
-                         max_age integer,
-                         max_payment_amount integer not null,
-                         min_age integer,
-                         min_payment_amount integer not null,
-                         payment_cycle integer,
-                         total_period_days integer not null,
-                         bank_id INT UNSIGNED not null,
-                         created_at TIMESTAMP null,
-                         id INT UNSIGNED not null auto_increment,
-                         updated_at TIMESTAMP null,
-                         name varchar(30) not null,
-                         interest_type enum ('COMPOUND','SIMPLE') not null,
-                         product_type enum ('DEPOSIT','FREE','SAVINGS') not null,
-                         primary key (id)
+CREATE TABLE Product (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    bank_id INT UNSIGNED NOT NULL,
+    productType VARCHAR(20) NOT NULL,
+    interestType VARCHAR(20) NOT NULL,
+    paymentCycle INT NULL,
+    isFixed BOOLEAN NOT NULL,
+    totalPeriodDays INT NOT NULL,
+    minPaymentAmount INT NOT NULL,
+    maxPaymentAmount INT NOT NULL,
+    baseRate DECIMAL(5,2) NOT NULL,
+    earlyWithdrawalRate DECIMAL(5,2) NOT NULL,
+    minAge INT NULL,
+    maxAge INT NULL,
+    depositProtectionLimit INT NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (bank_id) REFERENCES Bank(id)
 );
 
-create table transaction (
-                             amount integer not null,
-                             account_id INT UNSIGNED not null,
-                             balance_after bigint not null,
-                             created_at TIMESTAMP null,
-                             id INT UNSIGNED not null auto_increment,
-                             occurred_at datetime(6) not null,
-                             updated_at TIMESTAMP null,
-                             description varchar(255),
-                             status enum ('COMPLETED','FAILED','PENDING') not null,
-                             transaction_type enum ('DEPOSIT','INTEREST','MATURITY','PENALTY','WITHDRAW') not null,
-                             primary key (id)
+CREATE TABLE Account (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    product_id INT UNSIGNED NOT NULL,
+    accountNumber VARCHAR(30) NOT NULL UNIQUE,
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
+    principal BIGINT NOT NULL DEFAULT 0,
+    balance BIGINT NOT NULL DEFAULT 0,
+    accruedInterest BIGINT NOT NULL DEFAULT 0,
+    appliedRate DECIMAL(5,2) NOT NULL,
+    totalInstallmentCount INT UNSIGNED NOT NULL,
+    currentInstallmentCount INT UNSIGNED NOT NULL DEFAULT 0,
+    paymentDay INT UNSIGNED NULL,
+    lastPaidAt DATETIME NULL,
+    startedAt DATETIME NOT NULL,
+    maturityAt DATETIME NOT NULL,
+    terminatedAt DATETIME NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES User(id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
 );
 
-create table user (
-                      birth_date date not null,
-                      enabled bit not null,
-                      created_at TIMESTAMP null,
-                      id INT UNSIGNED not null auto_increment,
-                      updated_at TIMESTAMP null,
-                      username varchar(50) not null,
-                      password varchar(255) not null,
-                      role enum ('ROLE_ADMIN','ROLE_USER') not null,
-                      primary key (id)
+CREATE TABLE Transaction (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    account_id INT UNSIGNED NOT NULL,
+    transactionType VARCHAR(20) NOT NULL,
+    amount INT NOT NULL,
+    balanceAfter BIGINT NOT NULL,
+    occurredAt DATETIME NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'COMPLETED',
+    description VARCHAR(255),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES Account(id),
+    INDEX idx_transaction_account_occurred (account_id, occurredAt)
+);
+
+CREATE TABLE Image (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT UNSIGNED NOT NULL,
+    thumbnailPath VARCHAR(255) NOT NULL,
+    imagePath VARCHAR(255) NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES Product(id)
 );

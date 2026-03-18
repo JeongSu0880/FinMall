@@ -59,6 +59,7 @@ public class Account extends BaseEntity {
     @Column(columnDefinition = "INT UNSIGNED")
     private Integer paymentDay;
 
+    @Column
     private LocalDateTime lastPaidAt;
 
     @Column(nullable = false)
@@ -67,5 +68,6 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime maturityAt;
 
+    @Column
     private LocalDateTime terminatedAt;
 }

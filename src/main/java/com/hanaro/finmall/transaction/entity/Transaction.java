@@ -6,6 +6,7 @@ import com.hanaro.finmall.transaction.TransactionStatus;
 import com.hanaro.finmall.transaction.TransactionType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -45,4 +46,15 @@ public class Transaction extends BaseEntity {
 
     @Column(length = 255)
     private String description;
+
+    @Builder
+    public Transaction(Account account, TransactionType transactionType, Integer amount, Long balanceAfter, LocalDateTime occurredAt, TransactionStatus status, String description) {
+        this.account = account;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.balanceAfter = balanceAfter;
+        this.occurredAt = occurredAt;
+        this.status = status;
+        this.description = description;
+    }
 }
