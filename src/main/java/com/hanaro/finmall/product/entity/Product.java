@@ -22,7 +22,7 @@ public class Product extends BaseEntity {
     @Column(columnDefinition = "INT UNSIGNED")
     private Long id;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30, unique = true)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,9 +39,6 @@ public class Product extends BaseEntity {
 
     @Column
     private Integer paymentCycle;
-
-    @Column(nullable = false)
-    private Boolean isFixed;
 
     @Column(nullable = false)
     private Integer totalPeriodDays;

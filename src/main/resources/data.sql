@@ -33,7 +33,7 @@ INSERT INTO User (id, username, password, role, birthDate, enabled) VALUES
 -- =========================
 INSERT INTO Product (
     id, name, bankId, productType, interestType,
-    paymentCycle, isFixed, totalPeriodDays,
+    paymentCycle, totalPeriodDays,
     minPaymentAmount, maxPaymentAmount,
     baseRate, earlyWithdrawalRate,
     minAge, maxAge,
@@ -41,7 +41,7 @@ INSERT INTO Product (
 ) VALUES
 -- 정기예금
 (1, '하나 정기예금 1년', 1, 'DEPOSIT', 'SIMPLE',
- NULL, true, 365,
+ NULL,  365,
  1000000, 100000000,
  3.50, 1.00,
  19, NULL,
@@ -49,7 +49,7 @@ INSERT INTO Product (
 
 -- 정기적금
 (2, '하나 정기적금 1년', 1, 'SAVINGS', 'SIMPLE',
- 30, true, 365,
+ 30,  365,
  10000, 1000000,
  4.00, 1.50,
  19, NULL,
@@ -71,9 +71,8 @@ INSERT INTO Account (
     id, userId, productId,
     accountNumber,
     status,
-    principal, balance, accruedInterest,
-    appliedRate,
-    totalInstallmentCount, currentInstallmentCount,
+    principal, accruedInterest,
+    appliedRate, currentInstallmentCount,
     paymentDay,
     lastPaidAt,
     startedAt, maturityAt, terminatedAt
@@ -81,9 +80,8 @@ INSERT INTO Account (
 -- user1 적금
 (1, 2, 2, '111-2222-3333',
  'ACTIVE',
- 100000, 100000, 500,
- 4.00,
- 12, 2,
+ 100000, 500,
+ 4.00, 2,
  10,
  NOW(),
  NOW(), DATE_ADD(NOW(), INTERVAL 365 DAY), NULL),
@@ -91,9 +89,8 @@ INSERT INTO Account (
 -- user2 예금
 (2, 3, 1, '222-3333-4444',
  'ACTIVE',
- 5000000, 5000000, 0,
- 3.50,
- 1, 1,
+ 5000000, 0,
+ 3.50, 1,
  NULL,
  NOW(),
  NOW(), DATE_ADD(NOW(), INTERVAL 365 DAY), NULL);

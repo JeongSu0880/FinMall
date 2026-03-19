@@ -42,9 +42,6 @@ public class Account extends BaseEntity {
     private Long principal;
 
     @Column(nullable = false)
-    private Long balance;
-
-    @Column(nullable = false)
     private Long accruedInterest;
 
     @Column(nullable = false, precision = 5, scale = 2)
