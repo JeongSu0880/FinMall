@@ -39,6 +39,7 @@ public class CustomSecurityConfig {
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
+                                "/api/auth/**",
                                 "/api/user/login",
                                 "/api/user/signup",
                                 "/api/auth/**",

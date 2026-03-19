@@ -4,10 +4,7 @@ import com.hanaro.finmall.common.BaseEntity;
 import com.hanaro.finmall.product.Product;
 import com.hanaro.finmall.user.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,6 +14,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "Account")
+@Builder
+@AllArgsConstructor
 public class Account extends BaseEntity {
 
     @Id
@@ -68,6 +67,7 @@ public class Account extends BaseEntity {
 
     @Column(nullable = false)
     private Boolean isDefault = false;
+
 
     public void changeStatus(AccountStatus status) {
         this.status = status;

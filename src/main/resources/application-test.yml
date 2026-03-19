@@ -66,11 +66,3 @@ management:
       access: unrestricted
     health:
       show-details: always
-
-springdoc:
-  swagger-ui:
-    enabled: true
-    path: /swagger.html
-  api-docs:
-    enabled: true
-    path: /hana8/api-docs

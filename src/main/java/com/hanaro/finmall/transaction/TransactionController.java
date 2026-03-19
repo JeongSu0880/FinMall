@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/api/transaction")
 @RequiredArgsConstructor
 public class TransactionController {
     private final TransactionService transactionService;

@@ -3,9 +3,7 @@ package com.hanaro.finmall.transaction;
 import com.hanaro.finmall.account.Account;
 import com.hanaro.finmall.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "Transaction")
+@Builder
+@AllArgsConstructor
 public class Transaction extends BaseEntity {
 
     @Id
