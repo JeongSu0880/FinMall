@@ -81,7 +81,7 @@ INSERT INTO Account (
     startedAt, maturityAt, terminatedAt, isDefault
 ) VALUES
 -- user1 적금
-(1, 2, 2, '111-2222-3333',
+(1, 2, 2, '11122223333',
  'ACTIVE',
  100000, 500,
  4.00, 2,
@@ -90,7 +90,7 @@ INSERT INTO Account (
  NOW(), DATE_ADD(NOW(), INTERVAL 365 DAY), NULL, false),
 
 -- user2 예금
-(2, 3, 1, '222-3333-4444',
+(2, 3, 1, '2223333ㅇ4444',
  'ACTIVE',
  5000000, 0,
  3.50, 1,

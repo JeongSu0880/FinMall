@@ -1,0 +1,124 @@
+package com.hanaro.finmall.image;
+
+import lombok.RequiredArgsConstructor;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.NoSuchElementException;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class ImageService {
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    @Value("${upload.secure}")
+    private String securePath;
+
+    public String upload(MultipartFile file) {
+        return upload(file, false);
+    }
+
+    public String upload(MultipartFile file, boolean isSecure) {
+        return upload(file, isSecure, "");
+    }
+
+    public String upload(MultipartFile file, String saveDir) {
+        return upload(file, false, saveDir);
+    }
+
+    public String upload(MultipartFile file, boolean isSecure, String saveDir) {
+        if (file.isEmpty() || file.getOriginalFilename() == null)
+            throw new IllegalArgumentException("파일이 비어있습니다.");
+
+        String originalFilename = file.getOriginalFilename();
+
+        String ext = originalFilename.substring(
+                originalFilename.lastIndexOf("."));
+
+        String savedFilename = UUID.randomUUID() + ext;
+
+        Path savePath = Paths.get(isSecure ? securePath : uploadPath, saveDir, savedFilename).normalize();
+        Path thumbPath = Paths.get(isSecure ? securePath : uploadPath, saveDir, "thumb_" + savedFilename).normalize();
+
+        try {
+            Files.createDirectories(savePath.getParent());
+
+            file.transferTo(savePath);
+
+            String contentType = file.getContentType();
+            System.out.println("contentType = " + contentType);
+            if (contentType != null && contentType.startsWith(("image/"))) {
+                Thumbnails.of(savePath.toFile())
+                        .size(200, 200)
+                        .crop(Positions.CENTER)
+                        .outputQuality(0.8)
+                        .toFile(thumbPath.toFile());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("파일 저장 실패", e);
+        }
+        return savedFilename;
+    }
+
+    public ResponseEntity<Resource> download(String filename, boolean inline, boolean isSecure) {
+        Path filePath = Paths.get(isSecure ? securePath : uploadPath, filename);
+        Resource resource = new FileSystemResource(filePath);
+
+        if (!resource.exists())
+            throw new NoSuchElementException("파일을 찾을 수 없습니다: " + filename);
+
+        // Content-Type 자동 감지
+        String contentType;
+        try {
+            contentType = Files.probeContentType(filePath);
+        } catch (IOException e) {
+            contentType = "application/octet-stream";
+        }  // 모르면 기본값
+
+        String disposition = (inline ? "inline" : "attachment") + "; filename=\"" + filename + "\"";
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, disposition)
+                .body(resource);
+    }
+
+    public void delete(String filename) {
+        delete(filename, "");
+    }
+
+    public void delete(String filename, String saveDir) {
+        Path filePath = Paths.get(uploadPath, saveDir, filename).normalize();
+
+        if (!Files.exists(filePath))
+            throw new NoSuchElementException("파일을 찾을 수 없습니다: " + filename);
+
+        if (!filePath.startsWith(Paths.get(uploadPath)))
+            throw new IllegalArgumentException("잘못된 파일 경로입니다!");
+
+        try {
+            Files.delete(filePath);
+
+            Path thumbPath = Paths.get(uploadPath, saveDir, "thumb_" + filename);
+            if (Files.exists(thumbPath))
+                Files.delete(thumbPath);
+
+        } catch (IOException e) {
+            throw new RuntimeException("파일 삭제 실패", e);
+        }
+    }
+
+}

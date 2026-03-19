@@ -10,10 +10,10 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: false
+    show-sql: true
     defer-datasource-initialization: false
     properties:
       hibernate:
@@ -30,5 +30,47 @@ spring:
       mode: always
 
   flyway:
-    enabled: true
+    enabled: false
     baseline-on-migrate: true
+    repair-on-migrate: true
+
+  web:
+    resources:
+      add-mappings: false
+
+    servlet:
+      multipart:
+        location: src/main/resources/static/tmp
+        max-request-size: 10MB
+        max-file-size: 2MB
+
+    messages:
+      basename: messages/message
+
+upload:
+  path: src/main/resources/static/upload
+  secure: src/main/upload/secure
+
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: env,beans
+  endpoint:
+    metrics:
+      access: read_only
+    shutdown:
+      access: unrestricted
+    health:
+      show-details: always
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger.html
+  api-docs:
+    enabled: true
+    path: /hana8/api-docs
