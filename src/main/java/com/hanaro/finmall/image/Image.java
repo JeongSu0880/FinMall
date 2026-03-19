@@ -1,7 +1,7 @@
-package com.hanaro.finmall.image.entity;
+package com.hanaro.finmall.image;
 
 import com.hanaro.finmall.common.BaseEntity;
-import com.hanaro.finmall.product.entity.Product;
+import com.hanaro.finmall.product.Product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

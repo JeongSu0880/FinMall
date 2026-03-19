@@ -1,9 +1,7 @@
-package com.hanaro.finmall.product.entity;
+package com.hanaro.finmall.product;
 
-import com.hanaro.finmall.bank.entity.Bank;
+import com.hanaro.finmall.bank.Bank;
 import com.hanaro.finmall.common.BaseEntity;
-import com.hanaro.finmall.product.InterestType;
-import com.hanaro.finmall.product.ProductType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

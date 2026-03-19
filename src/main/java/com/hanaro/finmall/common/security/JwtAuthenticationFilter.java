@@ -1,15 +1,13 @@
 package com.hanaro.finmall.common.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanaro.finmall.user.UserRole;
-import com.hanaro.finmall.user.dto.UserDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -63,14 +61,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             Map<String, Object> claims = jwtUtil.validateToken(authHeader.substring(7));
 
-            UserDTO dto = UserDTO.builder()
-                    .username((String) claims.get("username"))
-                    .role(UserRole.valueOf((String) claims.get("role")))
-                    .build();
-
-            SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(dto, null, dto.getAuthorities())
-            );
+            Authentication auth = jwtUtil.getAuthentication(claims);
+            SecurityContextHolder.getContext().setAuthentication(auth);
 
         } catch (Exception e) {
             sendError(response, "ERROR_ACCESS_TOKEN");

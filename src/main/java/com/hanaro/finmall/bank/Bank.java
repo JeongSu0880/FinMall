@@ -1,4 +1,4 @@
-package com.hanaro.finmall.bank.entity;
+package com.hanaro.finmall.bank;
 
 import com.hanaro.finmall.common.BaseEntity;
 import jakarta.persistence.*;

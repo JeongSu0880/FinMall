@@ -1,6 +1,5 @@
 package com.hanaro.finmall.image;
 
-import com.hanaro.finmall.image.entity.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

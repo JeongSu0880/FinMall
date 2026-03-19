@@ -1,8 +1,7 @@
 package com.hanaro.finmall.common.security;
 
+import com.hanaro.finmall.user.User;
 import com.hanaro.finmall.user.UserRepository;
-import com.hanaro.finmall.user.dto.UserDTO;
-import com.hanaro.finmall.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +19,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        return UserDTO.builder()
+        return UserAuthDTO.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .role(user.getRole())

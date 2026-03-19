@@ -1,4 +1,4 @@
-package com.hanaro.finmall.user.dto;
+package com.hanaro.finmall.common.security;
 
 import com.hanaro.finmall.user.UserRole;
 import lombok.AllArgsConstructor;
