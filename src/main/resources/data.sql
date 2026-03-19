@@ -23,7 +23,7 @@ INSERT INTO Bank (id, name) VALUES
 -- =========================
 
 INSERT INTO User (id, username, password, role, birthDate, enabled) VALUES
-    (1, 'admin', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36w3C5nK5eQof8I4eAbOe3W', 'ADMIN', '1990-01-01', true),
+    (1, 'hanaro', '12345678', 'ADMIN', '1990-01-01', true),
     (2, 'user1@test.com', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36w3C5nK5eQof8I4eAbOe3W', 'USER', '1995-05-10', true),
     (3, 'user2@test.com', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36w3C5nK5eQof8I4eAbOe3W', 'USER', '2000-08-20', true);
 
@@ -57,7 +57,7 @@ INSERT INTO Product (
 
 -- 자유적금
 (3, '자유 적금 플러스', 2, 'FREE', 'COMPOUND',
- NULL, false, 180,
+ NULL, 180,
  1000, 5000000,
  3.20, 1.20,
  NULL, NULL,

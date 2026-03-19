@@ -48,9 +48,6 @@ public class Account extends BaseEntity {
     private BigDecimal appliedRate;
 
     @Column(nullable = false, columnDefinition = "INT UNSIGNED")
-    private Integer totalInstallmentCount;
-
-    @Column(nullable = false, columnDefinition = "INT UNSIGNED")
     private Integer currentInstallmentCount;
 
     @Column(columnDefinition = "INT UNSIGNED")

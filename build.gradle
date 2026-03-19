@@ -62,10 +62,17 @@ dependencies {
     // file upload
     implementation 'net.coobird:thumbnailator:0.4.21'
 
+    // SpringSecurity
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 
-//     핫 리로드 방지
-//    implementation  'org.springframework.boot:spring-boot-devtools'
-//    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // for JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    // security.yml에 다른 설정(${jwt.secret}) 추가 시 경고 제거용!
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
 jacoco {
