@@ -20,7 +20,7 @@ CREATE TABLE User (
 CREATE TABLE Product (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
-    bank_id INT UNSIGNED NOT NULL,
+    bankId INT UNSIGNED NOT NULL,
     productType VARCHAR(20) NOT NULL,
     interestType VARCHAR(20) NOT NULL,
     paymentCycle INT NULL,
@@ -35,13 +35,13 @@ CREATE TABLE Product (
     depositProtectionLimit INT NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (bank_id) REFERENCES Bank(id)
+    FOREIGN KEY (bankId) REFERENCES Bank(id)
 );
 
 CREATE TABLE Account (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL,
-    product_id INT UNSIGNED NOT NULL,
+    userId INT UNSIGNED NOT NULL,
+    productId INT UNSIGNED NOT NULL,
     accountNumber VARCHAR(30) NOT NULL UNIQUE,
     status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
     principal BIGINT NOT NULL DEFAULT 0,
@@ -57,13 +57,13 @@ CREATE TABLE Account (
     terminatedAt DATETIME NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES User(id),
-    FOREIGN KEY (product_id) REFERENCES Product(id)
+    FOREIGN KEY (userId) REFERENCES User(id),
+    FOREIGN KEY (productId) REFERENCES Product(id)
 );
 
 CREATE TABLE Transaction (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    account_id INT UNSIGNED NOT NULL,
+    accountId INT UNSIGNED NOT NULL,
     transactionType VARCHAR(20) NOT NULL,
     amount INT NOT NULL,
     balanceAfter BIGINT NOT NULL,
@@ -72,16 +72,15 @@ CREATE TABLE Transaction (
     description VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (account_id) REFERENCES Account(id),
-    INDEX idx_transaction_account_occurred (account_id, occurredAt)
+    FOREIGN KEY (accountId) REFERENCES Account(id),
+    INDEX idx_transaction_account_occurred (accountId, occurredAt)
 );
 
-CREATE TABLE Image (
+CREATE TABLE image (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    product_id INT UNSIGNED NOT NULL,
-    thumbnailPath VARCHAR(255) NOT NULL,
-    imagePath VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES Product(id)
+    productId INT UNSIGNED NOT NULL,
+    imageUrl VARCHAR(500) NOT NULL,
+    isThumbnail BOOLEAN NOT NULL DEFAULT FALSE,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (productId) REFERENCES Product(id)
 );

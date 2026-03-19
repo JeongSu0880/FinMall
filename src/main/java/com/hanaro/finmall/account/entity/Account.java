@@ -24,11 +24,11 @@ public class Account extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "INT UNSIGNED")
+    @JoinColumn(name = "userId", nullable = false, columnDefinition = "INT UNSIGNED")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false, columnDefinition = "INT UNSIGNED")
+    @JoinColumn(name = "productId", nullable = false, columnDefinition = "INT UNSIGNED")
     private Product product;
 
     @Column(nullable = false, unique = true, length = 30)

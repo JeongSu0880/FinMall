@@ -20,19 +20,19 @@ public class Image extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false, columnDefinition = "INT UNSIGNED")
+    @JoinColumn(name = "productId", nullable = false, columnDefinition = "INT UNSIGNED")
     private Product product;
 
-    @Column(name = "thumbnail_path", nullable = false, length = 255)
-    private String thumbnailPath;
+    @Column(nullable = false, length = 500)
+    private String imageUrl;
 
-    @Column(name = "image_path", nullable = false, length = 255)
-    private String imagePath;
+    @Column(nullable = false)
+    private boolean isThumbnail;
 
     @Builder
-    public Image(Product product, String thumbnailPath, String imagePath) {
+    public Image(Product product, String imageUrl, boolean isThumbnail) {
         this.product = product;
-        this.thumbnailPath = thumbnailPath;
-        this.imagePath = imagePath;
+        this.imageUrl = imageUrl;
+        this.isThumbnail = isThumbnail;
     }
 }

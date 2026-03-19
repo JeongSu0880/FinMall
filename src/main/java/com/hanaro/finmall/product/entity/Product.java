@@ -26,7 +26,7 @@ public class Product extends BaseEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_id", nullable = false, columnDefinition = "INT UNSIGNED")
+    @JoinColumn(name = "bankId", nullable = false, columnDefinition = "INT UNSIGNED")
     private Bank bank;
 
     @Enumerated(EnumType.STRING)

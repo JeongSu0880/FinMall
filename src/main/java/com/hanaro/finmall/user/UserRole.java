@@ -1,6 +1,6 @@
 package com.hanaro.finmall.user;
 
 public enum UserRole {
-    ROLE_USER,
-    ROLE_ADMIN
+    USER,
+    ADMIN
 }

@@ -4,7 +4,7 @@ TRUNCATE TABLE Account;
 TRUNCATE TABLE Product;
 TRUNCATE TABLE Bank;
 TRUNCATE TABLE User;
-TRUNCATE TABLE Image;
+TRUNCATE TABLE image;
 SET FOREIGN_KEY_CHECKS = 1;
 
 SET time_zone = 'Asia/Seoul';
@@ -32,7 +32,7 @@ INSERT INTO User (id, username, password, role, birthDate, enabled) VALUES
 -- 3. Product
 -- =========================
 INSERT INTO Product (
-    id, name, bank_id, productType, interestType,
+    id, name, bankId, productType, interestType,
     paymentCycle, isFixed, totalPeriodDays,
     minPaymentAmount, maxPaymentAmount,
     baseRate, earlyWithdrawalRate,
@@ -68,7 +68,7 @@ INSERT INTO Product (
 -- 4. Account
 -- =========================
 INSERT INTO Account (
-    id, user_id, product_id,
+    id, userId, productId,
     accountNumber,
     status,
     principal, balance, accruedInterest,
@@ -103,7 +103,7 @@ INSERT INTO Account (
 -- 5. Transaction
 -- =========================
 INSERT INTO Transaction (
-    id, account_id, transactionType,
+    id, accountId, transactionType,
     amount, balanceAfter,
     occurredAt, status, description
 ) VALUES
@@ -115,8 +115,13 @@ INSERT INTO Transaction (
 -- =========================
 -- 6. Image
 -- =========================
-INSERT INTO Image (id, product_id, thumbnailPath, imagePath) VALUES
-    (1, 1, '/upload/20260318/deposit1_thumb.png', '/upload/20260318/deposit1.png'),
-    (2, 1, '/upload/20260318/deposit1_detail_thumb.png', '/upload/20260318/deposit1_detail.png'),
-    (3, 2, '/upload/20260318/savings1_thumb.png', '/upload/20260318/savings1.png'),
-    (4, 3, '/upload/20260318/free1_thumb.png', '/upload/20260318/free1.png');
+INSERT INTO image (productId, imageUrl, isThumbnail) VALUES
+    (1, 'https://example.com/products/1/main.jpg', TRUE),
+    (1, 'https://example.com/products/1/detail1.jpg', FALSE),
+    (1, 'https://example.com/products/1/detail2.jpg', FALSE),
+    (2, 'https://example.com/products/2/main.jpg', TRUE),
+    (2, 'https://example.com/products/2/detail1.jpg', FALSE),
+    (3, 'https://example.com/products/3/main.jpg', TRUE),
+    (3, 'https://example.com/products/3/detail1.jpg', FALSE),
+    (3, 'https://example.com/products/3/detail2.jpg', FALSE),
+    (3, 'https://example.com/products/3/detail3.jpg', FALSE);

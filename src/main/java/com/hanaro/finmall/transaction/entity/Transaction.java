@@ -24,7 +24,7 @@ public class Transaction extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", nullable = false, columnDefinition = "INT UNSIGNED")
+    @JoinColumn(name = "accountId", nullable = false, columnDefinition = "INT UNSIGNED")
     private Account account;
 
     @Enumerated(EnumType.STRING)
