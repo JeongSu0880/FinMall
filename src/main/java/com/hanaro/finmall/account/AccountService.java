@@ -1,13 +1,11 @@
 package com.hanaro.finmall.account;
 
-import com.hanaro.finmall.account.dto.AccountCreateRequestDTO;
-import com.hanaro.finmall.account.dto.AccountResponseDTO;
-import com.hanaro.finmall.account.dto.AccountSearchDTO;
-import com.hanaro.finmall.account.dto.AccountStatusUpdateDTO;
+import com.hanaro.finmall.account.dto.*;
 import com.hanaro.finmall.common.config.AppConfig;
 import com.hanaro.finmall.common.security.UserAuthDTO;
 import com.hanaro.finmall.product.Product;
 import com.hanaro.finmall.product.ProductRepository;
+import com.hanaro.finmall.transaction.TransactionService;
 import com.hanaro.finmall.user.User;
 import com.hanaro.finmall.user.UserRepository;
 import com.hanaro.finmall.user.UserRole;
@@ -30,6 +28,7 @@ public class AccountService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final AppConfig appProperties;
+    private final TransactionService transactionService;
 
     public List<AccountResponseDTO> getAccounts(UserAuthDTO user) {
 
@@ -127,6 +126,7 @@ public class AccountService {
 
         account.changeStatus(req.getStatus());
 
+
         return account.getId();
     }
 
@@ -153,5 +153,37 @@ public class AccountService {
         account.setStartedAt(LocalDateTime.now());
 
         return accountRepository.save(account);
+    }
+
+    @Transactional
+    public Long deposit(Long accountId,
+                        AccountDepositRequestDTO req,
+                        UserAuthDTO user) {
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new RuntimeException("계좌 없음"));
+
+        if (!user.getRole().equals(UserRole.ADMIN) &&
+                !account.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("권한 없음");
+        }
+
+        if (account.getStatus() != AccountStatus.ACTIVE) {
+            throw new RuntimeException("활성 계좌만 납입 가능");
+        }
+
+        if (req.getAmount() <= 0) {
+            throw new IllegalArgumentException("금액은 0보다 커야 함");
+        }
+
+        account.deposit(req.getAmount());
+
+        account.increaseInstallmentCount();
+
+        account.updateLastPaidAt();
+
+        transactionService.recordDeposit(account, req.getAmount());
+
+        return account.getId();
     }
 }

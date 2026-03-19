@@ -3,3 +3,4 @@
 2. 가입 시 자유 입출금 계좌 개설
     - data.sql에 시드 데이터로 상품 3개 중 1번째가 해당 서비스에서 이용하는 기본 자유입출금 Product라고 가정하였습니다.
     - security.yml 파일에 DEFAULT_PRODUCT_ID로 설정해놓았습니다.
+3. flyway 마이그레이션 파일에 DB Create sql 작성해놓고, 변경사항도 저장해놓았습니다. ddl-auto update로 그대로 진행하셔도 됩니다.

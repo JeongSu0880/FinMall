@@ -4,7 +4,6 @@ import com.hanaro.finmall.account.Account;
 import com.hanaro.finmall.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -45,14 +44,21 @@ public class Transaction extends BaseEntity {
     @Column(length = 255)
     private String description;
 
-    @Builder
-    public Transaction(Account account, TransactionType transactionType, Integer amount, Long balanceAfter, LocalDateTime occurredAt, TransactionStatus status, String description) {
+    public Transaction(Account account,
+                       TransactionType transactionType,
+                       Integer amount,
+                       Long balance,
+                       TransactionStatus transactionStatus,
+                       String description,
+                       LocalDateTime now) {
+        super();
+    }
+
+    public void setAccount(Account account) {
         this.account = account;
-        this.transactionType = transactionType;
-        this.amount = amount;
-        this.balanceAfter = balanceAfter;
-        this.occurredAt = occurredAt;
-        this.status = status;
-        this.description = description;
+    }
+
+    public void setOccuredAt() {
+        this.occurredAt = LocalDateTime.now();
     }
 }

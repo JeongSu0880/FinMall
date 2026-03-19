@@ -1,9 +1,6 @@
 package com.hanaro.finmall.account;
 
-import com.hanaro.finmall.account.dto.AccountCreateRequestDTO;
-import com.hanaro.finmall.account.dto.AccountResponseDTO;
-import com.hanaro.finmall.account.dto.AccountSearchDTO;
-import com.hanaro.finmall.account.dto.AccountStatusUpdateDTO;
+import com.hanaro.finmall.account.dto.*;
 import com.hanaro.finmall.common.security.UserAuthDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +46,12 @@ public class AccountController {
                              Authentication authentication) {
 
         return accountService.updateStatus(accountId, req, authentication);
+    }
+
+    @PostMapping("/{accountId}/deposit")
+    public Long deposit(@PathVariable Long accountId,
+                        @RequestBody AccountDepositRequestDTO req,
+                        @AuthenticationPrincipal UserAuthDTO user) {
+        return accountService.deposit(accountId, req, user);
     }
 }

@@ -72,4 +72,24 @@ public class Account extends BaseEntity {
     public void changeStatus(AccountStatus status) {
         this.status = status;
     }
+
+    public void deposit(Integer amount) {
+        this.principal += amount;
+    }
+
+    public void withdraw(Integer amount) {
+        this.principal -= amount;
+    }
+    
+    public void increaseInstallmentCount() {
+        this.currentInstallmentCount++;
+    }
+
+    public void updateLastPaidAt() {
+        this.lastPaidAt = LocalDateTime.now();
+    }
+
+    public Long getBalance() {
+        return principal + accruedInterest;
+    }
 }
