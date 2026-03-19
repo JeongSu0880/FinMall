@@ -17,8 +17,9 @@ import java.util.Collections;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO implements UserDetails {
+public class UserAuthDTO implements UserDetails {
 
+    private Long id;
     private String username;
     private String password;
     private UserRole role;
