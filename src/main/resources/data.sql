@@ -39,8 +39,17 @@ INSERT INTO Product (
     minAge, maxAge,
     depositProtectionLimit
 ) VALUES
+
+-- 예금
+(1, '자유 입출금', 2, 'FREE', 'SIMPLE',
+ NULL, 180,
+ 1000, 5000000,
+ 3.20, 1.20,
+ NULL, NULL,
+ 100000000),
+
 -- 정기예금
-(1, '하나 정기예금 1년', 1, 'DEPOSIT', 'SIMPLE',
+(2, '하나 예금', 1, 'DEPOSIT', 'COMPOUND',
  NULL,  365,
  1000000, 100000000,
  3.50, 1.00,
@@ -48,20 +57,14 @@ INSERT INTO Product (
  100000000),
 
 -- 정기적금
-(2, '하나 정기적금 1년', 1, 'SAVINGS', 'SIMPLE',
+(3, '하나 정기적금 1년', 1, 'SAVINGS', 'SIMPLE',
  30,  365,
  10000, 1000000,
  4.00, 1.50,
  19, NULL,
- 100000000),
-
--- 자유적금
-(3, '자유 적금 플러스', 2, 'FREE', 'COMPOUND',
- NULL, 180,
- 1000, 5000000,
- 3.20, 1.20,
- NULL, NULL,
  100000000);
+
+
 
 
 -- =========================
@@ -75,7 +78,7 @@ INSERT INTO Account (
     appliedRate, currentInstallmentCount,
     paymentDay,
     lastPaidAt,
-    startedAt, maturityAt, terminatedAt
+    startedAt, maturityAt, terminatedAt, isDefault
 ) VALUES
 -- user1 적금
 (1, 2, 2, '111-2222-3333',
@@ -84,7 +87,7 @@ INSERT INTO Account (
  4.00, 2,
  10,
  NOW(),
- NOW(), DATE_ADD(NOW(), INTERVAL 365 DAY), NULL),
+ NOW(), DATE_ADD(NOW(), INTERVAL 365 DAY), NULL, false),
 
 -- user2 예금
 (2, 3, 1, '222-3333-4444',
@@ -93,7 +96,7 @@ INSERT INTO Account (
  3.50, 1,
  NULL,
  NOW(),
- NOW(), DATE_ADD(NOW(), INTERVAL 365 DAY), NULL);
+ NOW(), DATE_ADD(NOW(), INTERVAL 365 DAY), NULL, false);
 
 
 -- =========================

@@ -4,6 +4,7 @@ import com.hanaro.finmall.account.dto.AccountCreateRequestDTO;
 import com.hanaro.finmall.account.dto.AccountResponseDTO;
 import com.hanaro.finmall.account.dto.AccountSearchDTO;
 import com.hanaro.finmall.account.dto.AccountStatusUpdateDTO;
+import com.hanaro.finmall.common.config.AppConfig;
 import com.hanaro.finmall.common.security.UserAuthDTO;
 import com.hanaro.finmall.product.Product;
 import com.hanaro.finmall.product.ProductRepository;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,7 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
-
+    private final AppConfig appProperties;
 
     public List<AccountResponseDTO> getAccounts(UserAuthDTO user) {
 
@@ -133,5 +135,23 @@ public class AccountService {
         return accountRepository.search(userId, search).stream()
                 .map(accountMapper::toResponse)
                 .toList();
+    }
+
+    public Account createDefaultAccount(User user) {
+
+        Account account = new Account();
+
+        account.setUser(user);
+        account.setAccountNumber(generateAccountNumber(null));
+        account.setStatus(AccountStatus.ACTIVE);
+        account.setPrincipal(0L);
+
+        Product product = productRepository.findById(appProperties.getDefaultProductId())
+                .orElseThrow(() -> new RuntimeException("기본 상품 없음"));
+        account.setProduct(product);
+
+        account.setStartedAt(LocalDateTime.now());
+
+        return accountRepository.save(account);
     }
 }

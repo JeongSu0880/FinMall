@@ -66,6 +66,9 @@ public class Account extends BaseEntity {
     @Column
     private LocalDateTime terminatedAt;
 
+    @Column(nullable = false)
+    private Boolean isDefault = false;
+
     public void changeStatus(AccountStatus status) {
         this.status = status;
     }
