@@ -1,7 +1,7 @@
 package com.hanaro.finmall.admin;
 
 import com.hanaro.finmall.account.AccountService;
-import com.hanaro.finmall.account.dto.AccountResponse;
+import com.hanaro.finmall.account.dto.AccountResponseDTO;
 import com.hanaro.finmall.product.ProductService;
 import com.hanaro.finmall.product.dto.ProductCreateRequestDTO;
 import com.hanaro.finmall.product.dto.ProductResponseDTO;
@@ -30,7 +30,7 @@ public class AdminController {
     }
 
     @GetMapping("/accounts")
-    public List<AccountResponse> getAllAccounts() {
+    public List<AccountResponseDTO> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 

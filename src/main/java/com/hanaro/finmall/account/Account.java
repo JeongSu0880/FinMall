@@ -7,12 +7,14 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "Account")
 public class Account extends BaseEntity {
@@ -63,4 +65,8 @@ public class Account extends BaseEntity {
 
     @Column
     private LocalDateTime terminatedAt;
+
+    public void changeStatus(AccountStatus status) {
+        this.status = status;
+    }
 }
