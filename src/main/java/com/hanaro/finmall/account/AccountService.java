@@ -6,6 +6,8 @@ import com.hanaro.finmall.common.security.UserAuthDTO;
 import com.hanaro.finmall.product.Product;
 import com.hanaro.finmall.product.ProductRepository;
 import com.hanaro.finmall.transaction.TransactionService;
+import com.hanaro.finmall.transaction.TransactionType;
+import com.hanaro.finmall.transaction.dto.TransactionRequestDTO;
 import com.hanaro.finmall.user.User;
 import com.hanaro.finmall.user.UserRepository;
 import com.hanaro.finmall.user.UserRole;
@@ -126,6 +128,18 @@ public class AccountService {
 
         account.changeStatus(req.getStatus());
 
+        if (req.getStatus() == AccountStatus.TERMINATED) {
+            TransactionRequestDTO dto = new TransactionRequestDTO(
+                    account.getId(),
+                    appProperties.getDefaultProductId(),
+                    TransactionType.MATURITY,
+                    account.getBalance()
+            );
+            transactionService.transfer(accountId, dto, user.getId());
+        }
+        if (req.getStatus() == AccountStatus.MATURED) {
+
+        }
 
         return account.getId();
     }

@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountDepositRequestDTO {
-    Integer amount;
+    Long amount;
 }

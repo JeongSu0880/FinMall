@@ -29,7 +29,7 @@ public class Transaction extends BaseEntity {
     private TransactionType transactionType;
 
     @Column(nullable = false)
-    private Integer amount;
+    private Long amount;
 
     @Column(nullable = false)
     private Long balanceAfter;
@@ -46,7 +46,7 @@ public class Transaction extends BaseEntity {
 
     public Transaction(Account account,
                        TransactionType transactionType,
-                       Integer amount,
+                       Long amount,
                        Long balance,
                        TransactionStatus transactionStatus,
                        String description,

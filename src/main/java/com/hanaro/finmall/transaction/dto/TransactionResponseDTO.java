@@ -18,7 +18,7 @@ public class TransactionResponseDTO {
 
     private TransactionType transactionType;
 
-    private Integer amount;
+    private Long amount;
 
     private Long balanceAfter;
 

@@ -73,14 +73,14 @@ public class Account extends BaseEntity {
         this.status = status;
     }
 
-    public void deposit(Integer amount) {
+    public void deposit(Long amount) {
         this.principal += amount;
     }
 
-    public void withdraw(Integer amount) {
+    public void withdraw(Long amount) {
         this.principal -= amount;
     }
-    
+
     public void increaseInstallmentCount() {
         this.currentInstallmentCount++;
     }

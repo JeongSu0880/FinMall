@@ -18,7 +18,7 @@ public class TransactionService {
     private final TransactionMapper transactionMapper;
     private final AccountRepository accountRepository;
 
-    public void recordDeposit(Account account, Integer amount) {
+    public void recordDeposit(Account account, Long amount) {
         TransactionCreateDTO dto = new TransactionCreateDTO();
         dto.setTransactionType(TransactionType.DEPOSIT);
         dto.setAmount(amount);

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class TransactionController {
     private final TransactionService transactionService;
 
-    @PostMapping("/transaction/{accountId}")
+    @PostMapping("/{accountId}")
     public TransactionResponseDTO transfer(
             @PathVariable Long accountId,
             @Valid @RequestBody TransactionRequestDTO request,

@@ -10,9 +10,9 @@ import lombok.Setter;
 public class TransactionCreateDTO {
 
     private TransactionType transactionType;
-    private Integer amount;
+    private Long amount;
     private Long balanceAfter;
     private TransactionStatus status;
     private String description;
-    
+
 }
