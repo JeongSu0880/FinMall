@@ -3,13 +3,14 @@ package com.hanaro.finmall.admin;
 import com.hanaro.finmall.account.AccountService;
 import com.hanaro.finmall.account.dto.AccountResponse;
 import com.hanaro.finmall.product.ProductService;
-import com.hanaro.finmall.product.dto.ProductResponse;
+import com.hanaro.finmall.product.dto.ProductCreateRequestDTO;
+import com.hanaro.finmall.product.dto.ProductResponseDTO;
+import com.hanaro.finmall.product.dto.ProductUpdateRequestDTO;
 import com.hanaro.finmall.user.UserService;
 import com.hanaro.finmall.user.dto.UserResponseDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class AdminController {
 
 
     @GetMapping("/products")
-    public List<ProductResponse> getProducts() {
+    public List<ProductResponseDTO> getProducts() {
         return productService.getAllProducts();
     }
 
@@ -38,5 +39,23 @@ public class AdminController {
         return userService.getAllUsers();
     }
 
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public Long create(@RequestBody ProductCreateRequestDTO req) {
+        return productService.create(req);
+    }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Long update(@PathVariable Long id,
+                       @RequestBody ProductUpdateRequestDTO req) {
+        return productService.update(id, req);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Integer delete(@PathVariable Long id) {
+        return productService.delete(id);
+    }
 
 }
