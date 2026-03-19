@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PatchMapping("/users/me")
-    public ResponseEntity<Void> updateMyInfo(
+    public ResponseEntity<?> updateMyInfo(
             @AuthenticationPrincipal UserAuthDTO user,
             @RequestBody UpdateUserRequestDTO request
     ) {

@@ -23,8 +23,6 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String[] EXCLUDE_PATTERNS = {
-            "/api/user/login",
-            "/api/user/signup",
             "/posts/**",
             "/api/public/**",
             "/api/auth/**",

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService {
 
@@ -27,7 +26,18 @@ public class UserService {
         return userMapper.toResponse(userRepository.findById(id).orElseThrow());
     }
 
+    @Transactional
     public void updateUser(Long id, UpdateUserRequestDTO request) {
 
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (request.getUsername() != null) {
+            user.changeUsername(request.getUsername());
+        }
+
+        if (request.getBirthDate() != null) {
+            user.changeBirthDate(request.getBirthDate());
+        }
     }
 }

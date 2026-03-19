@@ -38,7 +38,14 @@ public class CustomSecurityConfig {
                 .cors(config -> config.configurationSource(corsConfigurationSource()))
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/user/login", "/api/user/signup", "/swagger-ui/**", "/v3/api-docs/**", "/favicon.ico").permitAll()
+                        .requestMatchers(
+                                "/api/user/login",
+                                "/api/user/signup",
+                                "/api/auth/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/favicon.ico"
+                        ).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
